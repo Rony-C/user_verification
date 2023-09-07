@@ -15,7 +15,7 @@ urlList = []
 #Create file and write to it
 def updateIDs():
         print("Creating ID list...")
-        with open('/Users/rony/vs_code/python/work_files/idVerification/ids.txt', 'w+') as f:
+        with open('directory_path/ids.txt', 'w+') as f:
                 f.write(pyperclip.paste())
 
 def processURLs():
@@ -25,15 +25,8 @@ def processURLs():
                 ids = f.readline().strip("/n")
                 idList = ids.split(",")
                 for id in idList:
-                        url = f'https://admin.gigable.app/admin/users/{id}/identity-check'
+                        url = f'https:/url_root.com/{id}/'
                         urlList.append(url)
-        #    lines = f.readline()
-        #    for line in lines:
-        #        #Gets ID digits only
-        #        line = line.strip(',')
-        #        #Creates full URL and stores it in list
-        #        url = f'https://admin.gigable.app/admin/users/{line}/identity-check'
-        #        urlList.append(url)      
         #Loops through URL List and opens it in Chrome
         counter = 1
         for url in urlList:
