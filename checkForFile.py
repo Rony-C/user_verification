@@ -3,12 +3,12 @@ from pandas import *
 
 #Search downloads folder, find file and open
 def checkForFile():
-    for file in os.listdir("/Users/rony/vs_code/python/work_files/idVerification"):
-        if not file.startswith("ID Verification"):
+    for file in os.listdir("directory_path"):
+        if not file.startswith("file name"):
             pass
         else:
             print(f"Found file '{file}' successfully")
-            fullPath = f"/Users/rony/vs_code/python/work_files/idVerification/{file}"
+            fullPath = f"directory_path/{file}"
             data = read_csv(fullPath)
             ids = data["Users → ID"].tolist()
 
