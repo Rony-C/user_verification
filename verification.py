@@ -1,5 +1,4 @@
-import webbrowser
-import argparse
+import webbrowser,argparse, pyperclip, time
 
 #Parse CLI arguments
 parser = argparse.ArgumentParser()
@@ -13,18 +12,40 @@ chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
 #Stores URLs to be checked
 urlList = []
 
+#Create file and write to it
+def updateIDs():
+        print("Creating ID list...")
+        with open('/Users/rony/vs_code/python/work_files/idVerification/ids.txt', 'w+') as f:
+                f.write(pyperclip.paste())
+
+def processURLs():
+        print("Processing URLs...")
 #Open file added via CLI
-with open(file, 'r') as f:
-    lines = f.readlines()
-    for line in lines:
-        #Gets ID digits only
-        line = line.strip('\n')
-        #Creates full URL and stores it in list
-        url = f'https://test.com/login/{line}/check-id'
-        urlList.append(url)      
-#Loops through URL List and opens it in Chrome
-for url in urlList:
-        webbrowser.get(chrome_path).open_new_tab(url) 
+        with open(file, 'r') as f:
+                ids = f.readline().strip("/n")
+                idList = ids.split(",")
+                for id in idList:
+                        url = f'https://admin.gigable.app/admin/users/{id}/identity-check'
+                        urlList.append(url)
+        #    lines = f.readline()
+        #    for line in lines:
+        #        #Gets ID digits only
+        #        line = line.strip(',')
+        #        #Creates full URL and stores it in list
+        #        url = f'https://admin.gigable.app/admin/users/{line}/identity-check'
+        #        urlList.append(url)      
+        #Loops through URL List and opens it in Chrome
+        counter = 1
+        for url in urlList:
+                if (counter % 10 == 0):
+                        print('Sos beag... Resuming shortly...')
+                        print(f'{counter} IDs checked...')
+                        time.sleep(10)
+                webbrowser.get(chrome_path).open_new_tab(url) 
+                counter += 1
+#Initialisation
+updateIDs()
+processURLs()
 #Prints how many IDs have been checked
 print(f'{len(urlList)} IDs checked')
         
